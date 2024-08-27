@@ -10,8 +10,12 @@ def index(request):
 # LIST ALL THE TWEETS ON A PAGE
 
 def tweet_list(request):
-    tweets = Tweet.objects.all().order_by('-created_at')
-    return render(request, 'tweet_list.html', {'tweets':tweets})
+    tweets = Tweet.objects.all()
+    for tweet in tweets:
+        if not tweet.photo:
+            tweet.photo = None  # Handle the missing photo as needed
+    return render(request, 'tweet_list.html', {'tweets': tweets})
+
 
 # CREATING A TWEET 
 
