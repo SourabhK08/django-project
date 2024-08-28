@@ -2,6 +2,10 @@ from django.shortcuts import render
 from .models import Tweet
 from .forms import TweetForm
 from django.shortcuts import get_object_or_404,redirect
+from django.contrib.auth.decorators import login_required
+
+
+
 # Create your views here.
 
 def index(request):
@@ -19,6 +23,7 @@ def tweet_list(request):
 
 # CREATING A TWEET 
 
+@login_required
 def tweet_create(request):
     
     #CASE 1 WHEN USER HAS AN EMPTY FORM   
@@ -48,6 +53,8 @@ def tweet_create(request):
 
 # HOW TO EDIT THE TWEET 
 
+@login_required
+
 def tweet_edit(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user = request.user)
     if request.method == 'POST':
@@ -64,6 +71,8 @@ def tweet_edit(request, tweet_id):
 
 
 # DELETING THE TWEET
+
+@login_required
 
 def tweet_delete(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user = request.user)
